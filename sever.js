@@ -15,7 +15,7 @@ app.use('/', (req, res) => {
 });
 
 let messages =[];
-fs.readFile('student.json', (err, data) => {
+fs.readFile('MesnsagensAnteriores.json', (err, data) => {
     if (err) throw err;
     messages = JSON.parse(data);
     console.log(messages);
@@ -28,12 +28,12 @@ io.on('connection' , socket =>{
 
     socket.on('sendMessage' , data =>{
         messages.push(data);
-        fs.writeFile('student.json', JSON.stringify(messages), (err) => {
+        fs.writeFile('MesnsagensAnteriores.json', JSON.stringify(messages), (err) => {
             if (err) throw err;
             console.log('Dado foi escrito no arquivo');
         });
         console.log(data);
-        //console.log(messages);
+        console.log(messages);
         socket.broadcast.emit('recivedMessage' , data);
     });
 });
